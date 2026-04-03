@@ -17,7 +17,7 @@ public abstract class SoundOptionsScreenMixin extends Screen {
         super(Text.empty());
     }
 
-    @Inject(method = "init", at = @At("TAIL"))
+    @Inject(method = "method_25426", at = @At("TAIL"))
     private void jukeboxFlatAudio_addToggle(CallbackInfo ci) {
         int buttonWidth = 200;
         int buttonX = this.width / 2 - buttonWidth / 2;
