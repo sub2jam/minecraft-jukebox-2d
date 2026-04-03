@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "JukeboxBlockEntityMixin",
-    "SoundOptionsScreenMixin"
+    "JukeboxBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
