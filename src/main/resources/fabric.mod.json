@@ -3,7 +3,7 @@
   "id": "jukeboxflataudio",
   "version": "${version}",
   "name": "Jukebox Flat Audio",
-  "description": "Disables 3D positional audio for jukeboxes, with a toggle in Sound Options.",
+  "description": "Disables 3D positional audio for jukeboxes",
   "authors": ["You"],
   "license": "MIT",
   "environment": "client",
@@ -18,6 +18,6 @@
   "depends": {
     "fabricloader": ">=0.16.5",
     "fabric-api": "*",
-    "minecraft": "1.21.1"
+    "minecraft": "1.21.11"
   }
 }
