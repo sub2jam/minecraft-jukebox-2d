@@ -1,7 +1,12 @@
 package com.jukeboxflataudio;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.gui.screen.option.SoundOptionsScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +19,6 @@ public class JukeboxFlatAudioMod implements ClientModInitializer {
 
     public static final String MOD_ID = "jukeboxflataudio";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-    // The setting: true = jukebox music plays flat (no 3D), false = normal 3D audio
     public static boolean flatJukeboxAudio = true;
 
     private static final Path CONFIG_PATH = FabricLoader.getInstance()
@@ -25,6 +28,25 @@ public class JukeboxFlatAudioMod implements ClientModInitializer {
     public void onInitializeClient() {
         loadConfig();
         LOGGER.info("Jukebox Flat Audio loaded. Flat jukebox audio: {}", flatJukeboxAudio);
+
+        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            if (screen instanceof SoundOptionsScreen) {
+                ButtonWidget button = ButtonWidget.builder(
+                    getToggleText(),
+                    btn -> {
+                        flatJukeboxAudio = !flatJukeboxAudio;
+                        saveConfig();
+                        btn.setMessage(getToggleText());
+                    }
+                ).dimensions(scaledWidth / 2 - 100, scaledHeight - 48, 200, 20).build();
+
+                Screens.getButtons(screen).add(button);
+            }
+        });
+    }
+
+    private static Text getToggleText() {
+        return Text.literal("Flat Jukebox Audio: " + (flatJukeboxAudio ? "ON" : "OFF"));
     }
 
     public static void loadConfig() {
