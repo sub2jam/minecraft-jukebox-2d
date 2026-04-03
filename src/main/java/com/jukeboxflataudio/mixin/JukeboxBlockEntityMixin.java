@@ -35,6 +35,7 @@ public class JukeboxBlockEntityMixin {
                 true
         );
 
-        ((SoundManager) (Object) this).play(flat);
+        // Use playImmediately to bypass server communication entirely
+        ((SoundManager)(Object)this).play(flat);
     }
 }
