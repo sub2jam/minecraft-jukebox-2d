@@ -30,22 +30,23 @@ public class JukeboxFlatAudioMod implements ClientModInitializer {
         LOGGER.info("Jukebox Flat Audio loaded. Flat jukebox audio: {}", flatJukeboxAudio);
 
         ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-            if (screen instanceof SoundOptionsScreen) {
-                ButtonWidget button = ButtonWidget.builder(
-                    getToggleText(),
-                    btn -> {
-                        flatJukeboxAudio = !flatJukeboxAudio;
-                        saveConfig();
-                        btn.setMessage(getToggleText());
-                    }
-                ).dimensions(scaledWidth / 2 - 100, scaledHeight - 48, 200, 20).build();
+            if (!(screen instanceof SoundOptionsScreen)) return;
 
-                Screens.getButtons(screen).add(button);
-            }
+            ButtonWidget[] buttonRef = new ButtonWidget[1];
+            buttonRef[0] = ButtonWidget.builder(
+                getToggleText(),
+                btn -> {
+                    flatJukeboxAudio = !flatJukeboxAudio;
+                    saveConfig();
+                    buttonRef[0].setMessage(getToggleText());
+                }
+            ).dimensions(scaledWidth / 2 - 100, scaledHeight - 48, 200, 20).build();
+
+            Screens.getButtons(screen).add(buttonRef[0]);
         });
     }
 
-    private static Text getToggleText() {
+    public static Text getToggleText() {
         return Text.literal("Flat Jukebox Audio: " + (flatJukeboxAudio ? "ON" : "OFF"));
     }
 
